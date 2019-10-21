@@ -4,17 +4,51 @@
 package org.uma.VeRxina;
 
 import io.reactivex.Flowable;
-import io.reactivex.disposables.Disposable;
+
+import java.util.concurrent.TimeUnit;
 
 public class App {
 
+
+    private enum State {
+        ADD, MULTIPLY
+    }
+
+    private static State calcMethod;
+
+
     public static void main(String[] args) {
 
-        Flowable<String> flowable = Flowable.just("hello", "world");
-        Disposable aa = flowable.subscribe(i -> System.out.println(i));
+//        Flowable<String> flowable = Flowable.just("hello", "world");
+//        Disposable aa = flowable.subscribe(System.out::println);
 
 
+        // 加算
+        calcMethod = State.ADD;
 
+        Flowable<Long> flowable = Flowable.interval(300L, TimeUnit.MILLISECONDS)
+                .take(7)
+                .scan((sum, data) -> {
+                    if (calcMethod == State.ADD) {
+                        return sum + data;
+                    } else
+                        return sum * data;
+                });
+
+        flowable.subscribe(System.out::println);
+
+        sleep(1000);
+        calcMethod = State.MULTIPLY;
+        sleep(5000);
+
+    }
+
+    public static void sleep(int n) {
+        try {
+            Thread.sleep(n);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 

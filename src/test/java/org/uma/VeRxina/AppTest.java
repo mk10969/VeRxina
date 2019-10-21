@@ -4,11 +4,15 @@
 package org.uma.VeRxina;
 
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
 class AppTest {
-    @Test void appHasAGreeting() {
-        App classUnderTest = new App();
-        assertNotNull(classUnderTest.getGreeting(), "app should have a greeting");
+    @Test
+    void appHasAGreeting() {
+
+        // Lは、Longの意味。
+        long data = 1L;
+        System.out.println(data);
+
+
     }
 }
